@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
 import { RouteComponentProps, Link } from "@reach/router";
 
 async function search(query: string) {
@@ -6,6 +7,38 @@ async function search(query: string) {
     .then(res => res.json())
     .then(json => json);
 }
+
+const ResultList = styled.ul`
+  padding: 0;
+  list-style: none;
+`;
+const SearchResult = styled.li``;
+
+const ResultLink = styled(Link)`
+  text-decoration: none;
+  display: block;
+  padding: 16px;
+  transition: background-color 150ms ease-in-out;
+
+  &:hover {
+    background-color: #eee;
+  }
+`;
+
+const ResultTitle = styled.h2`
+  font-family: sans-serif;
+  color: #333;
+`;
+
+const ResultType = styled.span`
+  font-size: 16px;
+  color: #666;
+`;
+
+const ResultOverview = styled.summary`
+  font-size: 16px;
+  color: #666;
+`;
 
 const Search: React.FC<RouteComponentProps> = () => {
   const [query, setQuery] = useState("");
@@ -37,20 +70,23 @@ const Search: React.FC<RouteComponentProps> = () => {
         <input type="submit" value="Search" />
       </form>
 
-      <ul>
+      <ResultList>
         {results.results.map(
-          ({ title, name, media_type, overview, id, ...rest }) => (
-            <li>
-              <Link to={`/movie/${id}`}>
-                <div>{title || name}</div>
-                <div>{media_type}</div>
-                <div>{overview}</div>
-                <pre>{JSON.stringify(rest, null, 2)}</pre>
-              </Link>
-            </li>
-          )
+          ({ title, name, media_type, overview, id, ...rest }) => {
+            console.log(rest);
+
+            return (
+              <SearchResult key={id}>
+                <ResultLink to={`/movie/${id}`}>
+                  <ResultTitle>{title || name}</ResultTitle>
+                  <ResultType>{media_type}</ResultType>
+                  <ResultOverview>{overview}</ResultOverview>
+                </ResultLink>
+              </SearchResult>
+            );
+          }
         )}
-      </ul>
+      </ResultList>
     </div>
   );
 };
