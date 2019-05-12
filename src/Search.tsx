@@ -12,6 +12,7 @@ const ResultList = styled.ul`
   padding: 0;
   list-style: none;
 `;
+
 const SearchResult = styled.li``;
 
 const ResultLink = styled(Link)`
