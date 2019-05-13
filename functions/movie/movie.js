@@ -2,8 +2,6 @@
 const fetch = require("node-fetch");
 const { URL, URLSearchParams } = require("url");
 const faunadb = require("faunadb");
-const chalk = require("chalk");
-const q = faunadb.query;
 
 const { TMDB_API_KEY, FAUNADB_SECRET } = process.env;
 
