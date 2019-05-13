@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 import { useNetlifyIdentity } from "react-netlify-identity";
 import { IdentityContext } from "./Identity";
 import Search from "./Search";
