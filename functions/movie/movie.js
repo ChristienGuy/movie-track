@@ -1,8 +1,15 @@
 /* eslint-disable */
 const fetch = require("node-fetch");
 const { URL, URLSearchParams } = require("url");
+const faunadb = require("faunadb");
+const chalk = require("chalk");
+const q = faunadb.query;
 
-const { TMDB_API_KEY } = process.env;
+const { TMDB_API_KEY, FAUNADB_SECRET } = process.env;
+
+const client = new faunadb.Client({
+  secret: FAUNADB_SECRET
+});
 
 exports.handler = async function(event, context) {
   const movieId = event.path.replace("/.netlify/functions/movie/", "");

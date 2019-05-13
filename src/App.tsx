@@ -1,17 +1,31 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
-import "./App.css";
+import { useNetlifyIdentity } from "react-netlify-identity";
+import { IdentityContext } from "./Identity";
 import Search from "./Search";
 import Movie from "./Movie";
 
+import "./App.css";
+import Login from "./Login";
+
+const url = "https://movie-track.netlify.com";
+
 const App: React.FC = () => {
+  const identity = useNetlifyIdentity(url);
+  const { isLoggedIn } = identity;
   return (
-    <div className="App">
-      <Router>
-        <Search path="/" />
-        <Movie path="/movie/:movieId" />
-      </Router>
-    </div>
+    <IdentityContext.Provider value={identity}>
+      <div className="App">
+        {isLoggedIn ? (
+          <Router>
+            <Search path="/" />
+            <Movie path="/movie/:movieId" />
+          </Router>
+        ) : (
+          <Login />
+        )}
+      </div>
+    </IdentityContext.Provider>
   );
 };
 
