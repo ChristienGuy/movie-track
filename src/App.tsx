@@ -8,10 +8,13 @@ import Movie from "./Movie";
 import "./App.css";
 import Login from "./Login";
 
-const url = "https://movie-track.netlify.com";
+const domainToUse =
+  new URL(window.location.origin).hostname === "localhost"
+    ? "https://movie-track.netlify.com"
+    : window.location.origin;
 
 const App: React.FC = () => {
-  const identity = useNetlifyIdentity(url);
+  const identity = useNetlifyIdentity(domainToUse);
   const { isLoggedIn } = identity;
   return (
     <IdentityContext.Provider value={identity}>
